@@ -1,5 +1,5 @@
 <template>
     <div>
-        Navigation
+        Search form
     </div>
 </template>
