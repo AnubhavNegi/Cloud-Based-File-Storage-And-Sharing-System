@@ -9,7 +9,13 @@
             CloudStore
         </div>
         <div class="px-3">
-
+            <CreateNewDropdown/>
+            <div class="py-3">
+                <NavLink href="/">My Files</NavLink>
+                <NavLink href="/">Shared with me</NavLink>
+                <NavLink href="/">Shared by me</NavLink>
+                <NavLink href="/">Trash</NavLink>
+            </div>
         </div>
     </nav>
 </template>
@@ -17,4 +23,7 @@
 <script setup>
 // Imports
     import ApplicationLogo from "@/Components/ApplicationLogo.vue"
+    import {Link} from "@inertiajs/vue3"
+    import CreateNewDropdown from "@/Components/app/CreateNewDropdown.vue"
+    import NavLink from "@/Components/NavLink.vue"
 </script>
