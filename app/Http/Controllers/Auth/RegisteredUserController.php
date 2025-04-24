@@ -47,6 +47,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        $file = new File();
+        $file->name = $user->email;
+        $file->is_folder = 1;
+        $file->makeRoot()->save();
+
         return redirect(RouteServiceProvider::HOME);
     }
 }
