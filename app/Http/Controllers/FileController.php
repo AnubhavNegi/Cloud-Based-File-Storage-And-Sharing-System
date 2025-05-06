@@ -15,6 +15,8 @@ class FileController extends Controller
 {
     public function myFiles(Request $request, string $folder=null)
     {
+        echo phpinfo();
+        exit;
         if($folder){
             $folder = File::query()->where('created_by', Auth::id())
             ->where('path', $folder)
