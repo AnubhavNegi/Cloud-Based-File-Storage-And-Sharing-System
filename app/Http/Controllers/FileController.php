@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Http\Resources\FileResource;
+use App\Http\Requests\DestroyFilesRequest;
 use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\StoreFolderRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class FileController extends Controller
 {
     public function myFiles(Request $request, string $folder=null)
     {
-        echo phpinfo();
-        exit;
         if($folder){
             $folder = File::query()->where('created_by', Auth::id())
             ->where('path', $folder)
@@ -103,6 +103,30 @@ class FileController extends Controller
                 $this->saveFile($file, $user, $parent);
             }
         }
+    }
+
+    public function destroy(DestroyFilesRequest $request)
+    {
+        $data = $request->validated();
+        $parent = $request->parent;
+
+        if($data['all']){
+            $children = $parent->children;
+
+            foreach ($children as $child){
+                $child->delete();
+            }
+        }
+        else{
+            foreach ($data['ids'] ?? [] as $id){
+                $file = File::find($id);
+                if($file){
+                    $file->delete();
+                }
+            }
+        }
+
+        return to_route('myFiles', ['folder' => $parent->path]);
     }
 
     private function saveFile($file, $user, $parent): void
