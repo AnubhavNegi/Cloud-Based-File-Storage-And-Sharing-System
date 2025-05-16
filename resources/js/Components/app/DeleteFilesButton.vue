@@ -26,7 +26,7 @@
 import { ref } from 'vue'
 import ConfirmationDialog from '@/Components/ConfirmationDialog.vue'
 import { useForm, usePage } from '@inertiajs/vue3'
-import { showErrorDialog } from '@/event-bus.js'
+import {showErrorDialog, showSuccessNotification} from "@/event-bus.js"
 
 //Uses
 const page = usePage()
@@ -82,6 +82,7 @@ function onDeleteConfirm(){
             showDeleteDialog.value = false
             emit('delete')
             //Todo show success notification
+            showSuccessNotification("Selected files have been deleted")
         }
     })
 
